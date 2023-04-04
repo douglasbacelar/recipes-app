@@ -3,12 +3,21 @@ import React, { useState, useMemo } from 'react';
 import HeaderContext from '../context/HeaderContext';
 
 export default function HeaderProvider({ children }) {
-  const [pageName, setPageName] = useState('');
-
+  const [endPointAPI, setEndPointAPI] = useState({
+    name: '',
+    ingredient: '',
+    firstLetter: '',
+  });
+  const [testAPI, setTestAPI] = useState([]);
+  const [IsSearch, setIsSearchAPI] = useState(false);
   const values = useMemo(() => ({
-    pageName,
-    setPageName,
-  }), [pageName]);
+    endPointAPI,
+    setEndPointAPI,
+    testAPI,
+    setTestAPI,
+    IsSearch,
+    setIsSearchAPI,
+  }), [IsSearch, testAPI, endPointAPI]);
 
   return (
     <HeaderContext.Provider value={ values }>

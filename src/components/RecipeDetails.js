@@ -1,17 +1,8 @@
-import React, { useContext } from 'react';
-import HeaderContext from '../context/HeaderContext';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import React from 'react';
 
-function Meals() {
-  const { testAPI } = useContext(HeaderContext);
-  const sliceList = 12;
-
+function RecipeDetails() {
   return (
-    <>
-      <div>
-        <Header title="Meals" />
-      </div>
+    <div>
       { testAPI
         ? (
           testAPI.slice(0, sliceList).map((element, index) => (
@@ -28,10 +19,9 @@ function Meals() {
               <p data-testid={ `${index}-card-name` }>{element.strMeal}</p>
             </div>
           ))
-        ) : <h1>Deu RUim</h1> }
-      <Footer />
-    </>
+        ) : ''}
+    </div>
   );
 }
 
-export default Meals;
+export default RecipeDetails;

@@ -9,12 +9,18 @@ import Drinks from '../pages/Drinks';
 import FavRecepies from '../pages/FavRecepies';
 import DoneRecipes from '../pages/DoneRecipes';
 import Profile from '../pages/Profile';
+import HeaderProvider from '../providers/HeaderProvider';
 
 describe('Testa o componentes do Header.js.', () => {
   const page = 'page-title';
   test('Testa se ao clicar no icone de Pesquisar, é redirecionado para a pagina Profile', () => {
     // Arrange
-    render(<Meals />, { wrapper: BrowserRouter });
+    render(
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
+      { wrapper: BrowserRouter },
+    );
     // Act
     const profileIcon = screen.getByTestId('profile-top-btn');
     userEvent.click(profileIcon);
@@ -24,9 +30,15 @@ describe('Testa o componentes do Header.js.', () => {
   });
   test('Teste se ao clicar no botão de Search é mostrado o input para pesquisar e ao clicar mais uma vez o input desaparece', () => {
     // Arrange
-    render(<Meals />, { wrapper: BrowserRouter });
+    render(
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
+      { wrapper: BrowserRouter },
+    );
     // Act
     const searchIcon = screen.getByTestId('search-top-btn');
+    expect(searchIcon).toBeInTheDocument();
     userEvent.click(searchIcon);
     const searchInput = screen.getByTestId('search-input');
     // Assert
@@ -38,7 +50,12 @@ describe('Testa o componentes do Header.js.', () => {
   });
   test('Teste se a pagina Profile contem os elementos corretos', () => {
     // Arrange
-    render(<Profile />, { wrapper: BrowserRouter });
+    render(
+      <HeaderProvider>
+        <Profile />
+      </HeaderProvider>,
+      { wrapper: BrowserRouter },
+    );
     // Act
     const profileText = screen.getByTestId(page);
     // Assert
@@ -46,7 +63,12 @@ describe('Testa o componentes do Header.js.', () => {
   });
   test('Teste se a pagina Drinks contem os elementos corretos', () => {
     // Arrange
-    render(<Drinks />, { wrapper: BrowserRouter });
+    render(
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
+      { wrapper: BrowserRouter },
+    );
     // Act
     const drinksText = screen.getByTestId(page);
     // Assert
@@ -54,7 +76,12 @@ describe('Testa o componentes do Header.js.', () => {
   });
   test('Teste se a pagina Done Recipes contem os elementos corretos', () => {
     // Arrange
-    render(<DoneRecipes />, { wrapper: BrowserRouter });
+    render(
+      <HeaderProvider>
+        <DoneRecipes />
+      </HeaderProvider>,
+      { wrapper: BrowserRouter },
+    );
     // Act
     const DoneRecipesText = screen.getByTestId(page);
     // Assert
@@ -62,7 +89,12 @@ describe('Testa o componentes do Header.js.', () => {
   });
   test('Teste se a pagina Favorite Recipes contem os elementos corretos', () => {
     // Arrange
-    render(<FavRecepies />, { wrapper: BrowserRouter });
+    render(
+      <HeaderProvider>
+        <FavRecepies />
+      </HeaderProvider>,
+      { wrapper: BrowserRouter },
+    );
     // Act
     const FavRecepiesText = screen.getByTestId(page);
     // Assert
