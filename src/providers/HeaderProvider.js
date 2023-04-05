@@ -9,15 +9,15 @@ export default function HeaderProvider({ children }) {
     firstLetter: '',
   });
   const [testAPI, setTestAPI] = useState([]);
-  const [IsSearch, setIsSearchAPI] = useState(false);
+  const [IsAlert, setIsAlertAPI] = useState('alert');
   const values = useMemo(() => ({
     endPointAPI,
     setEndPointAPI,
     testAPI,
     setTestAPI,
-    IsSearch,
-    setIsSearchAPI,
-  }), [IsSearch, testAPI, endPointAPI]);
+    IsAlert,
+    setIsAlertAPI,
+  }), [IsAlert, testAPI, endPointAPI]);
 
   return (
     <HeaderContext.Provider value={ values }>
