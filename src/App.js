@@ -3,14 +3,17 @@ import './App.css';
 import Routes from './Routes';
 import LoginProvider from './providers/LoginProvider';
 import HeaderProvider from './providers/HeaderProvider';
+import ApiProvider from './providers/ApiProvider';
 
 function App() {
   return (
-    <HeaderProvider>
-      <LoginProvider>
-        <Routes />
-      </LoginProvider>
-    </HeaderProvider>
+    <ApiProvider>
+      <HeaderProvider>
+        <LoginProvider>
+          <Routes />
+        </LoginProvider>
+      </HeaderProvider>
+    </ApiProvider>
   );
 }
 

@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import HeaderContext from '../context/HeaderContext';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Recipes from '../components/Recipes';
+import Categories from '../components/Categories';
 
 function Drinks() {
   const { testAPI } = useContext(HeaderContext);
@@ -11,8 +13,11 @@ function Drinks() {
     <>
       <div>
         <Header title="Drinks" />
+        <div>
+          <Categories />
+        </div>
       </div>
-      { testAPI
+      { testAPI?.length > 0
         ? (
           testAPI.slice(0, sliceList).map((element, index) => (
             <div
@@ -28,7 +33,7 @@ function Drinks() {
               <p data-testid={ `${index}-card-name` }>{element.strDrink}</p>
             </div>
           ))
-        ) : <h1>Deu RUim</h1> }
+        ) : <Recipes /> }
       <Footer />
     </>
   );

@@ -5,7 +5,7 @@ import { fetchFoodsAPI, fetchDrinksAPI } from '../services/FoodsAPI';
 
 function SearchBar() {
   const { endPointAPI, setEndPointAPI,
-    setTestAPI, setIsSearchAPI } = useContext(HeaderContext);
+    setTestAPI } = useContext(HeaderContext);
   const history = useHistory();
   const [name, setName] = useState('');
 
@@ -16,7 +16,6 @@ function SearchBar() {
       console.log(returnAPI);
       if (returnAPI !== 'alert' && returnAPI.meals.length === 1) {
         history.push(`/meals/${returnAPI.meals[0].idMeal}`);
-        setIsSearchAPI(true);
       }
       setTestAPI(returnAPI.meals);
     } if (pathname === '/drinks') {
@@ -24,7 +23,6 @@ function SearchBar() {
       console.log(returnAPI);
       if (returnAPI !== 'alert' && returnAPI.drinks.length === 1) {
         history.push(`/drinks/${returnAPI.drinks[0].idDrink}`);
-        setIsSearchAPI(true);
       }
       setTestAPI(returnAPI.drinks);
     }
