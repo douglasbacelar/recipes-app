@@ -12,7 +12,7 @@ function Header({ title }) {
   return (
     <div>
       <section>
-        <h1>Recipes App </h1>
+        <h1>Recipes App!</h1>
         { !(title === 'Profile'
         || title === 'Done Recipes'
         || title === 'Favorite Recipes') && (
