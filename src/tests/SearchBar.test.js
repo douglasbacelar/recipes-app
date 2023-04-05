@@ -9,9 +9,7 @@ import Drinks from '../pages/Drinks';
 describe('Testa o componentes do SearchBar.js.', () => {
   test('Testa se acontece um alert ao pesquisar por um ingrediente sem inserir nenhum valor no input', async () => {
     // Arrange
-    newAlert.jest.fn();
     render(
-
       <HeaderProvider>
         <Drinks />
       </HeaderProvider>,

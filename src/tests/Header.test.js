@@ -10,9 +10,12 @@ import FavRecepies from '../pages/FavRecepies';
 import DoneRecipes from '../pages/DoneRecipes';
 import Profile from '../pages/Profile';
 import HeaderProvider from '../providers/HeaderProvider';
+import LoginProvider from '../providers/LoginProvider';
+import ApiProvider from '../providers/ApiProvider';
 
 describe('Testa o componentes do Header.js.', () => {
   const page = 'page-title';
+  const profileTitle = 'Profile';
   test('Testa se ao clicar no icone de Pesquisar, é redirecionado para a pagina Profile', () => {
     // Arrange
     render(
@@ -99,5 +102,52 @@ describe('Testa o componentes do Header.js.', () => {
     const FavRecepiesText = screen.getByTestId(page);
     // Assert
     expect(FavRecepiesText).toBeInTheDocument();
+  });
+  test('Testa se ao clicar no icone de Search aparece a SearchBar para fazer pesquisa', () => {
+    // Arrange
+    render(
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Meals />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
+      { wrapper: BrowserRouter },
+    );
+    // Act
+    const searchIcon = screen.getByTestId('search-top-btn');
+    userEvent.click(searchIcon);
+    const searchInput = screen.getByTestId('search-input');
+    const searchButton = screen.getByTestId('exec-search-btn');
+    const searchRadioIng = screen.getByTestId('ingredient-search-radio');
+    const searchRadioName = screen.getByTestId('name-search-radio');
+    const searchRadioLetter = screen.getByTestId('first-letter-search-radio');
+    // Assert
+    expect(searchInput).toBeInTheDocument();
+    expect(searchButton).toBeInTheDocument();
+    expect(searchRadioIng).toBeInTheDocument();
+    expect(searchRadioName).toBeInTheDocument();
+    expect(searchRadioLetter).toBeInTheDocument();
+  });
+  test('Testa se ao clicar no icone do Profile, é redirecionado para a rota /profile', () => {
+    // Arrange
+    render(
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Meals />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
+      { wrapper: BrowserRouter },
+    );
+    // Act
+    const profileIcon = screen.getByTestId('profile-top-btn');
+    userEvent.click(profileIcon);
+    const profileText = screen.getByTestId(profileTitle);
+    // Assert
+    expect(profileText).toBeInTheDocument();
+    expect(profileIcon).toBeInTheDocument();
   });
 });
