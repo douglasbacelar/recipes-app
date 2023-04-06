@@ -1,11 +1,13 @@
 import React from 'react';
-import { render, screen, cleanup } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
+import { BrowserRouter, Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 import HeaderProvider from '../providers/HeaderProvider';
 import LoginProvider from '../providers/LoginProvider';
 import ApiProvider from '../providers/ApiProvider';
 import Routes from '../Routes';
+import Profile from '../pages/Profile';
 
 afterEach(() => {
   cleanup(render);
@@ -84,5 +86,29 @@ describe('Testa a page Profile.js', () => {
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(enterButton).toBeInTheDocument();
+  });
+});
+describe('Profile', () => {
+  test('renderiza corretamente', () => {
+    const history = createMemoryHistory();
+    render(
+      <Router history={ history }>
+        <Profile />
+      </Router>,
+    );
+    const emailElement = screen.getByTestId('profile-email');
+    const doneButton = screen.getByTestId('profile-done-btn');
+    const favoriteButton = screen.getByTestId('profile-favorite-btn');
+    const logoutButton = screen.getByTestId('profile-logout-btn');
+    expect(emailElement).toBeInTheDocument();
+    expect(doneButton).toBeInTheDocument();
+    expect(favoriteButton).toBeInTheDocument();
+    expect(logoutButton).toBeInTheDocument();
+    fireEvent.click(doneButton);
+    expect(history.location.pathname).toBe('/done-recipes');
+    fireEvent.click(favoriteButton);
+    expect(history.location.pathname).toBe('/favorite-recipes');
+    fireEvent.click(logoutButton);
+    expect(history.location.pathname).toBe('/');
   });
 });

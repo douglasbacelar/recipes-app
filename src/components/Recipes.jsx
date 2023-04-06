@@ -4,8 +4,12 @@ import ApiContext from '../context/ApiContext';
 import RecipeCard from './RecipeCard';
 
 function Recipes() {
-  const { setPathname,
-    initialRecipes, recipesByCategory, category } = useContext(ApiContext);
+  const {
+    setPathname,
+    initialRecipes,
+    recipesByCategory,
+    category,
+  } = useContext(ApiContext);
   const history = useHistory();
   const sliceCards = 12;
   const { pathname } = history.location;
