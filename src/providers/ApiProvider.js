@@ -58,13 +58,17 @@ export default function ApiProvider({ children }) {
   }, [pathname, category]);
 
   const values = useMemo(() => ({
+    pathname,
     setPathname,
     initialRecipes,
+    setInitialRecipes,
     categories,
-    setCategory,
+    getCategories,
     category,
+    setCategory,
     recipesByCategory,
-  }), [initialRecipes, categories, category, recipesByCategory]);
+    setRecipesByCategory,
+  }), [initialRecipes, categories, category, recipesByCategory, pathname]);
 
   return (
     <ApiContext.Provider value={ values }>

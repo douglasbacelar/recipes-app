@@ -95,3 +95,19 @@ export const fetchDetailsDrinksAPI = async (id) => {
   const data = await detailsDrinks.json();
   return data;
 };
+
+export const fetchRecommendationDrinks = async () => {
+  const slicenumber = 6;
+  const URLDrink = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const responseDrink = await fetch(URLDrink);
+  const dataDrink = await responseDrink.json();
+  return dataDrink.meals.slice(0, slicenumber);
+};
+
+export const fetchRecommendationMeals = async () => {
+  const slicenumber = 6;
+  const URLMeals = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const responseMeals = await fetch(URLMeals);
+  const dataMeals = await responseMeals.json();
+  return dataMeals.drinks.slice(0, slicenumber);
+};

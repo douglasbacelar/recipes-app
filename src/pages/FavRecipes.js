@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function FavRecepies() {
+function FavRecipes() {
   return (
     <div>
       <Header title="Favorite Recipes" />
@@ -9,4 +9,4 @@ function FavRecepies() {
   );
 }
 
-export default FavRecepies;
+export default FavRecipes;

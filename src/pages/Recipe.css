@@ -1,0 +1,11 @@
+.carouselFather {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  max-width: 100vh;
+}
+
+.carouselChildren {
+  flex: none;
+  scroll-snap-align: start;
+}

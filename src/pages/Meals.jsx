@@ -9,11 +9,6 @@ function Meals() {
   const { testAPI } = useContext(HeaderContext);
   const sliceList = 12;
 
-  // useEffect(() => {
-  //   const validation = testAPI?.length > 0;
-  //   console.log(validation);
-  // }, [testAPI]);
-
   return (
     <>
       <div>
@@ -28,14 +23,21 @@ function Meals() {
             <div
               key={ index }
               data-testid={ `${index}-recipe-card` }
+              id="teste-teste"
             >
               <img
                 data-testid={ `${index}-card-img` }
                 src={ element.strMealThumb }
                 width={ 200 }
                 alt={ element }
+                id="teste-teste2"
               />
-              <p data-testid={ `${index}-card-name` }>{element.strMeal}</p>
+              <p
+                data-testid={ `${index}-card-name` }
+                id="teste-teste3"
+              >
+                {element.strMeal}
+              </p>
             </div>
           ))
         ) : <Recipes /> }

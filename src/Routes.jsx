@@ -9,21 +9,21 @@ import DrinksRecipe from './pages/DrinksRecipe';
 import DrinksProgress from './pages/DrinksProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
-import FavRecepies from './pages/FavRecepies';
+import FavRecipes from './pages/FavRecipes';
 
 function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
+      <Route path="/meals/:id/in-progress" component={ MealsProgress } />
+      <Route path="/drinks/:id/in-progress" component={ DrinksProgress } />
+      <Route path="/drinks/:id" component={ DrinksRecipe } />
+      <Route path="/meals/:id" component={ MealsRecipe } />
       <Route path="/meals" component={ Meals } />
       <Route path="/drinks" component={ Drinks } />
-      <Route path="/drinks/:id-da-receita" component={ DrinksRecipe } />
-      <Route path="/meals/:id-da-receita" component={ MealsRecipe } />
-      <Route path="/meals/:id-da-receita/in-progress" component={ MealsProgress } />
-      <Route path="/drinks/:id-da-receita/in-progress" component={ DrinksProgress } />
       <Route path="/profile" component={ Profile } />
       <Route path="/done-recipes" component={ DoneRecipes } />
-      <Route path="/favorite-recipes" component={ FavRecepies } />
+      <Route path="/favorite-recipes" component={ FavRecipes } />
     </Switch>
   );
 }

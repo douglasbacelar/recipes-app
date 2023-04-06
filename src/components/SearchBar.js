@@ -1,40 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import HeaderContext from '../context/HeaderContext';
 import { fetchFoodsAPI, fetchDrinksAPI } from '../services/FoodsAPI';
 
 function SearchBar() {
-  const { endPointAPI, setEndPointAPI,
-    setTestAPI } = useContext(HeaderContext);
+  const {
+    endPointAPI,
+    setEndPointAPI,
+    setTestAPI,
+    nameT,
+    setName,
+  } = useContext(HeaderContext);
   const history = useHistory();
-  const [name, setName] = useState('');
 
   const handleClick = async () => {
     const { pathname } = history.location;
     if (pathname === '/meals') {
-      const returnAPI = await fetchFoodsAPI(endPointAPI, name);
-      console.log(returnAPI);
+      const returnAPI = await fetchFoodsAPI(endPointAPI, nameT);
       if (returnAPI !== 'alert' && returnAPI.meals.length === 1) {
         history.push(`/meals/${returnAPI.meals[0].idMeal}`);
       }
       setTestAPI(returnAPI.meals);
     } if (pathname === '/drinks') {
-      const returnAPI = await fetchDrinksAPI(endPointAPI, name);
-      console.log(returnAPI);
+      const returnAPI = await fetchDrinksAPI(endPointAPI, nameT);
       if (returnAPI !== 'alert' && returnAPI.drinks.length === 1) {
         history.push(`/drinks/${returnAPI.drinks[0].idDrink}`);
       }
       setTestAPI(returnAPI.drinks);
     }
   };
-
   return (
     <div>
       <label>
         <input
           type="text"
           data-testid="search-input"
-          value={ name }
+          value={ nameT }
           onChange={ ({ target }) => setName(target.value) }
         />
       </label>

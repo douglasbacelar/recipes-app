@@ -10,6 +10,7 @@ export default function HeaderProvider({ children }) {
   });
   const [testAPI, setTestAPI] = useState([]);
   const [IsAlert, setIsAlertAPI] = useState('alert');
+  const [nameT, setName] = useState('');
   const values = useMemo(() => ({
     endPointAPI,
     setEndPointAPI,
@@ -17,7 +18,9 @@ export default function HeaderProvider({ children }) {
     setTestAPI,
     IsAlert,
     setIsAlertAPI,
-  }), [IsAlert, testAPI, endPointAPI]);
+    nameT,
+    setName,
+  }), [IsAlert, testAPI, endPointAPI, nameT]);
 
   return (
     <HeaderContext.Provider value={ values }>
