@@ -132,7 +132,7 @@ function DrinksRecipe() {
         style={ { position: 'fixed', bottom: '0px', left: '300px' } }
         data-testid="share-btn"
         onClick={ () => {
-          copy(`localhost:3000${history.location.pathname}`);
+          copy(`http://localhost:3000${history.location.pathname}`);
           setIsCopy(true);
         } }
       >
