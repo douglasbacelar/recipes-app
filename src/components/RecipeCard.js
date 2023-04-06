@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
 function RecipeCard({ index, recipe, pathname }) {
-  const { strMeal, strDrink, strMealThumb, strDrinkThumb, idMeal, idDrink } = recipe;
+  const {
+    strMeal,
+    strDrink,
+    strMealThumb,
+    strDrinkThumb,
+    idMeal,
+    idDrink,
+  } = recipe || {};
   const history = useHistory();
 
   const handleClick = (id) => {
