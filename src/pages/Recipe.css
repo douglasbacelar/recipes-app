@@ -1,8 +1,8 @@
 .carouselFather {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   max-width: 100vh;
+  scroll-snap-type: x mandatory;
 }
 
 .carouselChildren {
