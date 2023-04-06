@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import React, { useEffect, useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import RecipeContext from '../context/RecipeContext';
 import { fetchDetailsDrinksAPI, fetchRecommendationDrinks } from '../services/FoodsAPI';
 import './Recipe.css';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,23 +8,52 @@ import shareIcon from '../images/shareIcon.svg';
 const copy = require('clipboard-copy');
 
 function DrinksRecipe() {
-  const [isCopy, setIsCopy] = useState(false);
-  const [recipeDetails, setRecipeDetails] = useState([]);
-  const [recommend, setRecommend] = useState([]);
-  const [quantity, setQuantity] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+  const [isInProgress, setIsInProgress] = useState(false);
+  const {
+    isCopyDrinks,
+    setIsCopyDrinks,
+    recipeDetailsDrinks,
+    setRecipeDetailsDrinks,
+    recommendDrinks,
+    setRecommendDrinks,
+    quantityDrinks,
+    setQuantityDrinks,
+    ingredientsDrinks,
+    setIngredientsDrinks,
+    setinstructionsDrinks,
+  } = useContext(RecipeContext);
   const history = useHistory();
-  const routeTest = useRouteMatch();
   const id = history.location.pathname.replace('/drinks/', '');
 
   const pStyle = {
     margin: '0px',
     paddingBottom: '25px',
   };
+
+  const handleClick = () => {
+    const { pathname } = history.location;
+    const recipeType = pathname.includes('meals') ? 'meals' : 'drinks';
+    const inProgressRecipes = JSON.parse(localStorage
+      .getItem('inProgressRecipes')) || { meals: {}, drinks: {} };
+    inProgressRecipes[recipeType][id] = ingredientsDrinks;
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
+    history.push(`/drinks/${id}/in-progress`);
+  };
+
   useEffect(() => {
+    const checkIdLocalStorage = () => {
+      const { pathname } = history.location;
+      const recipeType = pathname.includes('meals') ? 'meals' : 'drinks';
+      const inProgressRecipes = JSON.parse(localStorage
+        .getItem('inProgressRecipes')) || { meals: {}, drinks: {} };
+      if (id in inProgressRecipes[recipeType]) {
+        setIsInProgress(true);
+      }
+    };
+    checkIdLocalStorage();
     const fetchRecommend = async () => {
       const recommendation = await fetchRecommendationDrinks();
-      setRecommend(await recommendation);
+      setRecommendDrinks(await recommendation);
     };
     fetchRecommend();
     const fetchAndFilterRecipe = async () => {
@@ -34,16 +64,17 @@ function DrinksRecipe() {
       const filterQnt = Object.entries(returnApi.drinks[0])
         .filter(([key, value]) => key.includes('strMeasure') && value)
         .map(([key, value]) => ({ name: value, key }));
-      setQuantity(filterQnt);
-      setIngredients(filterIngredients);
-      setRecipeDetails(returnApi.drinks[0]);
+      setQuantityDrinks(filterQnt);
+      setIngredientsDrinks(filterIngredients);
+      setRecipeDetailsDrinks(returnApi.drinks[0]);
     };
     fetchAndFilterRecipe();
-  }, [id]);
+  }, [id, setIngredientsDrinks, setQuantityDrinks, history.location,
+    setRecommendDrinks, setRecipeDetailsDrinks]);
 
-  console.log(routeTest);
   const { strDrinkThumb,
-    strDrink, strInstructions, strYoutube, strAlcoholic } = recipeDetails;
+    strDrink, strInstructions, strYoutube, strAlcoholic } = recipeDetailsDrinks;
+  setinstructionsDrinks(strInstructions);
   return (
     <>
       <h1>DrinksRecipe</h1>
@@ -61,7 +92,7 @@ function DrinksRecipe() {
           {' '}
         </h1>
         <div>
-          {ingredients.map((ingredient, index) => (
+          {ingredientsDrinks.map((ingredient, index) => (
             <div key={ index }>
               <p data-testid={ `${index}-ingredient-name-and-measure` }>
                 {`${ingredient.name}`}
@@ -69,7 +100,7 @@ function DrinksRecipe() {
               </p>
             </div>
           ))}
-          {quantity.map((qtd, index) => (
+          {quantityDrinks.map((qtd, index) => (
             <div key={ index }>
               <p data-testid={ `${index}-ingredient-name-and-measure` }>
                 {`${qtd.name}`}
@@ -95,7 +126,7 @@ function DrinksRecipe() {
         ) : ''}
         <p>Recommend:</p>
         <div className="carouselFather">
-          {recommend.map((elem, index) => (
+          {recommendDrinks.map((elem, index) => (
             <div
               className="carouselChildren"
               key={ index }
@@ -114,13 +145,14 @@ function DrinksRecipe() {
       </div>
       <button
         style={ { position: 'fixed', bottom: '0px' } }
+        onClick={ () => handleClick() }
         data-testid="start-recipe-btn"
-        onClick={ () => history.push(`/drinks/${id}/in-progress`) }
       >
-        Start Recipe
-
+        {
+          isInProgress ? 'Continue Recipe' : 'Start Recipe'
+        }
       </button>
-      {isCopy
+      {isCopyDrinks
         ? (
           <h1
             style={ pStyle }
@@ -132,8 +164,8 @@ function DrinksRecipe() {
         style={ { position: 'fixed', bottom: '0px', left: '300px' } }
         data-testid="share-btn"
         onClick={ () => {
-          copy(`localhost:3000${history.location.pathname}`);
-          setIsCopy(true);
+          copy(`http://localhost:3000${history.location.pathname}`);
+          setIsCopyDrinks(true);
         } }
       >
         <img src={ shareIcon } alt="botão de compartilhar" />
