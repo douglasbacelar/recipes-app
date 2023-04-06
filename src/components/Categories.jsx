@@ -12,10 +12,6 @@ function Categories() {
     setPathname(pathname);
   }, [setPathname, pathname]);
 
-  // useEffect(() => {
-  //   console.log(categories);
-  // }, []);
-
   const handleClickCategory = (choice) => {
     if (category === choice) {
       setCategory('all');

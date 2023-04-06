@@ -13,7 +13,6 @@ function Login() {
   const history = useHistory();
 
   const handleClick = () => {
-    console.log('teste');
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/meals');
   };

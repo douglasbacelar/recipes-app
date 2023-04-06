@@ -12,12 +12,10 @@ function Recipes() {
 
   useEffect(() => {
     setPathname(pathname);
-    console.log(recipesByCategory);
-  }, [setPathname, pathname, recipesByCategory]);
+  }, [setPathname, pathname]);
 
   return (
     <div>
-      <button onClick={ () => console.log(recipesByCategory) }>test</button>
       {category === 'all' ? (
         initialRecipes?.slice(0, sliceCards).map((recipe, index) => (
           <RecipeCard

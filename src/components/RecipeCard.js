@@ -16,6 +16,7 @@ function RecipeCard({ index, recipe, pathname }) {
 
   return (
     <button
+      style={ { width: '200px', height: '200px' } }
       data-testid={ `${index}-recipe-card` }
       onClick={ () => handleClick(pathname === '/meals' ? idMeal : idDrink) }
     >
@@ -26,6 +27,8 @@ function RecipeCard({ index, recipe, pathname }) {
         {pathname === '/meals' ? idMeal : idDrink}
       </h1>
       <img
+        width={ 75 }
+        height={ 75 }
         data-testid={ `${index}-card-img` }
         src={ pathname === '/meals' ? strMealThumb : strDrinkThumb }
         alt={ pathname === '/meals' ? strMeal : strDrink }

@@ -6,23 +6,29 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import Meals from '../pages/Meals';
 import Drinks from '../pages/Drinks';
-import FavRecepies from '../pages/FavRecepies';
+import FavRecipes from '../pages/FavRecipes';
 import DoneRecipes from '../pages/DoneRecipes';
-import Profile from '../pages/Profile';
 import HeaderProvider from '../providers/HeaderProvider';
+import LoginProvider from '../providers/LoginProvider';
+import ApiProvider from '../providers/ApiProvider';
 
 describe('Testa o componentes do Header.js.', () => {
   const page = 'page-title';
+  const profileIconBtn = 'profile-top-btn';
   test('Testa se ao clicar no icone de Pesquisar, é redirecionado para a pagina Profile', () => {
     // Arrange
     render(
-      <HeaderProvider>
-        <Meals />
-      </HeaderProvider>,
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Meals />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
-    const profileIcon = screen.getByTestId('profile-top-btn');
+    const profileIcon = screen.getByTestId(profileIconBtn);
     userEvent.click(profileIcon);
     const profileText = screen.getByTestId(page);
     // Assert
@@ -31,9 +37,13 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se ao clicar no botão de Search é mostrado o input para pesquisar e ao clicar mais uma vez o input desaparece', () => {
     // Arrange
     render(
-      <HeaderProvider>
-        <Meals />
-      </HeaderProvider>,
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Meals />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -48,25 +58,16 @@ describe('Testa o componentes do Header.js.', () => {
     // Assert
     expect(searchInput).not.toBeInTheDocument();
   });
-  test('Teste se a pagina Profile contem os elementos corretos', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <Profile />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const profileText = screen.getByTestId(page);
-    // Assert
-    expect(profileText).toBeInTheDocument();
-  });
   test('Teste se a pagina Drinks contem os elementos corretos', () => {
     // Arrange
     render(
-      <HeaderProvider>
-        <Drinks />
-      </HeaderProvider>,
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Drinks />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -77,9 +78,13 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se a pagina Done Recipes contem os elementos corretos', () => {
     // Arrange
     render(
-      <HeaderProvider>
-        <DoneRecipes />
-      </HeaderProvider>,
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <DoneRecipes />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -90,14 +95,65 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se a pagina Favorite Recipes contem os elementos corretos', () => {
     // Arrange
     render(
-      <HeaderProvider>
-        <FavRecepies />
-      </HeaderProvider>,
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <FavRecipes />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
     const FavRecepiesText = screen.getByTestId(page);
     // Assert
     expect(FavRecepiesText).toBeInTheDocument();
+  });
+  test('Testa se ao clicar no icone de Search aparece a SearchBar para fazer pesquisa', () => {
+    // Arrange
+    render(
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Meals />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
+      { wrapper: BrowserRouter },
+    );
+    // Act
+    const searchIcon = screen.getByTestId('search-top-btn');
+    userEvent.click(searchIcon);
+    const searchInput = screen.getByTestId('search-input');
+    const searchButton = screen.getByTestId('exec-search-btn');
+    const searchRadioIng = screen.getByTestId('ingredient-search-radio');
+    const searchRadioName = screen.getByTestId('name-search-radio');
+    const searchRadioLetter = screen.getByTestId('first-letter-search-radio');
+    // Assert
+    expect(searchInput).toBeInTheDocument();
+    expect(searchButton).toBeInTheDocument();
+    expect(searchRadioIng).toBeInTheDocument();
+    expect(searchRadioName).toBeInTheDocument();
+    expect(searchRadioLetter).toBeInTheDocument();
+  });
+  test('Testa se ao clicar no icone do Profile, é redirecionado para a rota /profile', () => {
+    // Arrange
+    render(
+      <ApiProvider>
+        <HeaderProvider>
+          <LoginProvider>
+            <Meals />
+          </LoginProvider>
+        </HeaderProvider>
+      </ApiProvider>,
+      { wrapper: BrowserRouter },
+    );
+    // Act
+    const profileIcon = screen.getByTestId(profileIconBtn);
+    userEvent.click(profileIcon);
+    const pageTitle = screen.getByTestId('page-title');
+    // Assert
+    expect(pageTitle).toBeInTheDocument();
+    expect(profileIcon).toBeInTheDocument();
   });
 });
