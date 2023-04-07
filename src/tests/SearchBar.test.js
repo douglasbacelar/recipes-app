@@ -1,12 +1,19 @@
+// Cria teste para cobrir 90% do componente SearchBar.js!
+
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import HeaderProvider from '../providers/HeaderProvider';
 import LoginProvider from '../providers/LoginProvider';
 import ApiProvider from '../providers/ApiProvider';
 import Meals from '../pages/Meals';
 import Drinks from '../pages/Drinks';
+import HeaderContext from '../context/HeaderContext';
+import SearchBar from '../components/SearchBar';
+import { fetchFoodsAPI, fetchDrinksAPI } from '../services/FoodsAPI';
+
+jest.mock('../services/FoodsAPI');
 
 describe('Testa o componente SearchBar.js', () => {
   const search = 'search-top-btn';
@@ -18,8 +25,15 @@ describe('Testa o componente SearchBar.js', () => {
   const recipeT = 'recipe-title';
   const recipeP = 'recipe-photo';
   const nameRadio = 'name-search-radio';
+  const ingRadio = 'ingredient-search-radio';
+  const setEndPointAPI = jest.fn();
+  const setTestAPI = jest.fn();
+  const setName = jest.fn();
   beforeAll(() => {
     global.alert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   test('testa se ao pesquisar pelo componente Meals com apenas uma letra pela opção first letter, o retorno da API é o correto!', async () => {
@@ -97,8 +111,8 @@ describe('Testa o componente SearchBar.js', () => {
     userEvent.click(searchButton);
     const searchInput = screen.getByTestId(searchInputLint);
     const searchButton2 = screen.getByTestId(execSearch);
-    const ingRadio = screen.getByTestId('ingredient-search-radio');
-    userEvent.click(ingRadio);
+    const ingRa = screen.getByTestId(ingRadio);
+    userEvent.click(ingRa);
     userEvent.type(searchInput, 'Orange Zest');
     userEvent.click(searchButton2);
     // Assert
@@ -213,8 +227,8 @@ describe('Testa o componente SearchBar.js', () => {
     userEvent.click(searchButton);
     const searchInput = screen.getByTestId(searchInputLint);
     const searchButton2 = screen.getByTestId(execSearch);
-    const ingRadio = screen.getByTestId('ingredient-search-radio');
-    userEvent.click(ingRadio);
+    const ingRa = screen.getByTestId(ingRadio);
+    userEvent.click(ingRa);
     userEvent.type(searchInput, 'Limeade');
     userEvent.click(searchButton2);
     // Assert
@@ -297,6 +311,206 @@ describe('Testa o componente SearchBar.js', () => {
     // Assert
     waitFor(() => {
       expect(global.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
+    });
+  });
+  test('Testa se ao chamar fetchDrinksAPI com os parâmetros corretos a rota é /meals', async () => {
+    const mockApiResponse = {
+      meals: [{ idMeal: 123 }],
+    };
+
+    fetchFoodsAPI.mockResolvedValueOnce(mockApiResponse);
+
+    // Arrange
+    render(
+      <HeaderContext.Provider
+        value={ {
+          endPointAPI: 'name',
+          setEndPointAPI,
+          setTestAPI,
+          nameT: 'spaghetti',
+          setName,
+        } }
+      >
+        <MemoryRouter initialEntries={ ['/meals'] }>
+          <SearchBar />
+        </MemoryRouter>
+      </HeaderContext.Provider>,
+    );
+    // Act
+    const execSearchButton = screen.getByTestId(execSearch);
+    userEvent.click(execSearchButton);
+    // Assert
+    expect(fetchFoodsAPI).toHaveBeenCalledWith('name', 'spaghetti');
+  });
+  test('Testa se ao chamar fetchDrinksAPI com os parâmetros corretos a rota é /drinks', async () => {
+    const mockApiResponse = {
+      drinks: [{ idDrink: 456 }],
+    };
+
+    fetchDrinksAPI.mockResolvedValueOnce(mockApiResponse);
+
+    // Arrange
+    render(
+      <HeaderContext.Provider
+        value={ {
+          endPointAPI: 'name',
+          setEndPointAPI,
+          setTestAPI,
+          nameT: 'mojito',
+          setName,
+        } }
+      >
+        <MemoryRouter initialEntries={ ['/drinks'] }>
+          <SearchBar />
+        </MemoryRouter>
+      </HeaderContext.Provider>,
+    );
+    // Act
+    const execSearchButton = screen.getByTestId(execSearch);
+    userEvent.click(execSearchButton);
+    // Assert
+    expect(fetchDrinksAPI).toHaveBeenCalledWith('name', 'mojito');
+  });
+  test('Testa se ao chamar fetchDrinksAPI com os parâmetros corretos a rota é redirecionada para /meals/52997', async () => {
+    const mockApiResponse = {
+      meals: [],
+    };
+    fetchFoodsAPI.mockResolvedValueOnce(mockApiResponse);
+    const mockHistoryPush = jest.fn();
+
+    // Arrange
+    render(
+      <HeaderContext.Provider
+        value={ {
+          endPointAPI: 'name',
+          setEndPointAPI,
+          setTestAPI,
+          nameT: 'corba',
+          setName,
+        } }
+      >
+        <MemoryRouter initialEntries={ ['/meals'] }>
+          <SearchBar />
+        </MemoryRouter>
+      </HeaderContext.Provider>,
+    );
+    // Act
+    const searchInput = screen.getByTestId(searchInputLint);
+    const nameRadio1 = screen.getByTestId(nameRadio);
+    const searchButton = screen.getByTestId(execSearch);
+    userEvent.type(searchInput, { target: { value: 'corba' } });
+    userEvent.click(nameRadio1);
+    userEvent.click(searchButton);
+    // Assert
+    waitFor(() => {
+      userEvent.click(execSearchButton);
+      expect(fetchFoodsAPI).toHaveBeenCalledWith('name', 'corba');
+      expect(mockHistoryPush).toHaveBeenCalledWith('/meals/52997');
+    });
+  });
+  test('Testa se ao chamar fetchDrinksAPI com os parâmetros corretos a rota é /drinks.', async () => {
+    const mockApiResponse = {
+      drinks: [{ idDrink: 456 }],
+    };
+
+    fetchDrinksAPI.mockResolvedValueOnce(mockApiResponse);
+
+    // Arrange
+    render(
+      <HeaderContext.Provider
+        value={ {
+          endPointAPI: 'name',
+          setEndPointAPI,
+          setTestAPI,
+          nameT: 'mojito',
+          setName,
+        } }
+      >
+        <MemoryRouter initialEntries={ ['/drinks'] }>
+          <SearchBar />
+        </MemoryRouter>
+      </HeaderContext.Provider>,
+    );
+    // Act
+    const execSearchButton = screen.getByTestId(execSearch);
+    userEvent.click(execSearchButton);
+    // Assert
+    expect(fetchDrinksAPI).toHaveBeenCalledWith('name', 'mojito');
+  });
+  test('Testa se ao chamar fetchFoodsAPI com os parâmetros corretos a rota é redirecionada para /meals/52997', async () => {
+    const mockApiResponse = {
+      meals: [],
+    };
+
+    fetchFoodsAPI.mockResolvedValueOnce(mockApiResponse);
+    const mockHistoryPush = jest.fn();
+
+    // Arrange
+    render(
+      <HeaderContext.Provider
+        value={ {
+          endPointAPI: 'name',
+          setEndPointAPI,
+          setTestAPI,
+          nameT: 'corba',
+          setName,
+        } }
+      >
+        <MemoryRouter initialEntries={ ['/meals'] }>
+          <SearchBar />
+        </MemoryRouter>
+      </HeaderContext.Provider>,
+    );
+    // Act
+    const searchInput = screen.getByTestId(searchInputLint);
+    const nameRadio1 = screen.getByTestId(nameRadio);
+    const searchButton = screen.getByTestId(execSearch);
+    userEvent.type(searchInput, { target: { value: 'corba' } });
+    userEvent.click(nameRadio1);
+    userEvent.click(searchButton);
+    // Assert
+    waitFor(() => {
+      userEvent.click(execSearchButton);
+      expect(fetchFoodsAPI).toHaveBeenCalledWith('name', 'corba');
+      expect(mockHistoryPush).toHaveBeenCalledWith('/meals/52997');
+    });
+  });
+  test('Testa se ao chamar fetchDrinksAPI com os parâmetros corretos a rota é redirecionada para /drinks/17222', async () => {
+    const mockApiResponse = {
+      drinks: [],
+    };
+
+    fetchDrinksAPI.mockResolvedValueOnce(mockApiResponse);
+    const mockHistoryPush = jest.fn();
+
+    // Arrange
+    render(
+      <HeaderContext.Provider
+        value={ {
+          endPointAPI: 'name',
+          setEndPointAPI,
+          setTestAPI,
+          nameT: 'a1',
+          setName,
+        } }
+      >
+        <MemoryRouter initialEntries={ ['/drinks'] }>
+          <SearchBar />
+        </MemoryRouter>
+      </HeaderContext.Provider>,
+    );
+    // Act
+    const searchInput = screen.getByTestId(searchInputLint);
+    const nameRadio1 = screen.getByTestId(nameRadio);
+    const searchButton = screen.getByTestId(execSearch);
+    userEvent.type(searchInput, { target: { value: 'a1' } });
+    userEvent.click(nameRadio1);
+    userEvent.click(searchButton);
+    // Assert
+    waitFor(() => {
+      userEvent.click(execSearchButton);
+      expect(fetchFoodsAPI).toHaveBeenCalledWith('name', 'a1');
+      expect(mockHistoryPush).toHaveBeenCalledWith('/drinks/17222');
     });
   });
 });

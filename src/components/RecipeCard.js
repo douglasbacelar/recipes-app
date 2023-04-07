@@ -10,7 +10,7 @@ function RecipeCard({ index, recipe, pathname }) {
     strDrinkThumb,
     idMeal,
     idDrink,
-  } = recipe || {};
+  } = recipe;
   const history = useHistory();
 
   const handleClick = (id) => {
