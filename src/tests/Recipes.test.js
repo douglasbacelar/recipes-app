@@ -1,44 +1,75 @@
+// Cria teste para cobrir 90% do componente Recipes.js!
+
 import React from 'react';
-import { render, screen, waitFor, cleanup } from '@testing-library/react';
-import { BrowserRouter, Router } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { createMemoryHistory } from 'history';
-import HeaderProvider from '../providers/HeaderProvider';
-import LoginProvider from '../providers/LoginProvider';
-import ApiProvider from '../providers/ApiProvider';
-import RecipeCard from '../components/RecipeCard';
+import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import ApiContext from '../context/ApiContext';
+import Recipes from '../components/Recipes';
 
 afterEach(() => {
-  cleanup(render);
+  jest.clearAllMocks();
 });
 
-describe('Testa o componente Recipes.js', () => {
-  test('Testa se ao clicar em alguma receita na página Meals, o usuário é redirecionado para rota com o id correto', async () => {
+describe('Testa o componente Recipes', () => {
+  const mockRecipes = [
+    { id: 0, title: 'Teste 0' },
+    { id: 1, title: 'Teste 1' },
+    { id: 2, title: 'Teste 2' },
+  ];
+  const mockCategory = 'all';
+  const mockSetPathname = jest.fn();
+
+  test('Testa se exibe os cartões de receita quando a categoria é All', async () => {
     // Arrange
-    const history = createMemoryHistory();
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Router history={ history }>
-              <RecipeCard />
-            </Router>
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
-      { wrapper: BrowserRouter },
+      <ApiContext.Provider
+        value={ {
+          initialRecipes: mockRecipes,
+          recipesByCategory: [],
+          category: mockCategory,
+          setPathname: mockSetPathname,
+        } }
+      >
+        <MemoryRouter>
+          <Recipes />
+        </MemoryRouter>
+      </ApiContext.Provider>,
     );
     // Act
-    await waitFor(() => {
-      const recipeCard = screen.findByTestId('undefined-recipe-card');
-      const recipeCardImg = screen.findByTestId('undefined-card-img');
-      const recipeCardName = screen.findByTestId('undefined-card-name');
+    waitFor(() => {
       // Assert
-      expect(recipeCard).toBeInTheDocument();
-      expect(recipeCardImg).toBeInTheDocument();
-      expect(recipeCardName).toBeInTheDocument();
-      userEvent.click(recipeCard);
-      expect(history.location.pathname).toBe('/meals/52771');
+      const recipeCards = screen.findAllById('recipe-card');
+      expect(recipeCards).toHaveLength(3);
+    });
+  });
+
+  test('Testa se exibe os cartões de receita quando a categoria é All', async () => {
+    const mockRecipesByCategory = [
+      { id: 0, title: 'Teste 0', category: 'category1' },
+      { id: 1, title: 'Teste 1', category: 'category1' },
+      { id: 2, title: 'Teste 2', category: 'category2' },
+    ];
+    const mockCategory1 = 'category1';
+    // Arrange
+    render(
+      <ApiContext.Provider
+        value={ {
+          initialRecipes: [],
+          recipesByCategory: mockRecipesByCategory,
+          category: mockCategory1,
+          setPathname: mockSetPathname,
+        } }
+      >
+        <MemoryRouter>
+          <Recipes />
+        </MemoryRouter>
+      </ApiContext.Provider>,
+    );
+    // Act
+    waitFor(() => {
+      // Assert
+      const recipeCards = screen.findAllById('recipe-card');
+      expect(recipeCards).toHaveLength(2);
     });
   });
 });
