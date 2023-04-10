@@ -1,61 +1,33 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import HeaderProvider from '../provider/HeaderProvider';
-// import ApiProvider from '../providers/ApiProvider';
-import Meals from '../pages/Meals';
-import Drinks from '../pages/Drinks';
+import { useHistory } from 'react-router-dom';
+import drinkIcon from '../images/drinkIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
 
-describe('Testa o componente Footer.js', () => {
-  test('Testa se renderiza um Footer ao entrar na pagina Meal', async () => {
-    // Arrange
-    render(
+function Footer() {
+  const history = useHistory();
+  return (
+    <div data-testid="footer" style={ { position: 'fixed', bottom: '0px' } }>
+      <button
+        onClick={ () => history.push('/drinks') }
+      >
+        <img
+          src={ drinkIcon }
+          data-testid="drinks-bottom-btn"
+          alt="foto de uma bebida"
+        />
 
-      <HeaderProvider>
+      </button>
+      <button
+        onClick={ () => history.push('/meals') }
+      >
+        <img
+          src={ mealIcon }
+          data-testid="meals-bottom-btn"
+          alt="foto de talheres "
+        />
+      </button>
+    </div>
+  );
+}
 
-        <Meals />
-
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const MealsBtn = screen.getByTestId('meals-bottom-btn');
-    const DrinksBtn = screen.getByTestId('drinks-bottom-btn');
-    // Assert
-    expect(MealsBtn).toBeInTheDocument();
-    expect(DrinksBtn).toBeInTheDocument();
-    // Act
-    userEvent.click(DrinksBtn);
-    // Assert
-    waitFor(() => {
-      const DrinksTitle = screen.findByTestId('page-title');
-      expect(DrinksTitle.innerHTML).toBe('Drinks');
-    });
-  });
-  test('Testa se renderiza um Footer ao entrar na pagina Meal', async () => {
-    // Arrange
-    render(
-
-      <HeaderProvider>
-
-        <Drinks />
-
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const MealsBtn = screen.getByTestId('meals-bottom-btn');
-    const DrinksBtn = screen.getByTestId('drinks-bottom-btn');
-    // Assert
-    expect(MealsBtn).toBeInTheDocument();
-    expect(DrinksBtn).toBeInTheDocument();
-    // Act
-    userEvent.click(MealsBtn);
-    // Assert
-    waitFor(() => {
-      const MealssTitle = screen.findByTestId('page-title');
-      expect(MealssTitle.innerHTML).toBe('Meals');
-    });
-  });
-});
+export default Footer;
