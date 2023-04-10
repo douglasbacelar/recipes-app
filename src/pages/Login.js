@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import LoginContext from '../context/LoginContext';
 
 function Login() {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-  } = useContext(LoginContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const passwordLength = 6;
   const history = useHistory();
 
@@ -16,7 +12,6 @@ function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     history.push('/meals');
   };
-
   return (
     <div>
       <form>

@@ -5,9 +5,9 @@ import { screen, render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-import HeaderProvider from '../providers/HeaderProvider';
-import LoginProvider from '../providers/LoginProvider';
-import ApiProvider from '../providers/ApiProvider';
+import HeaderProvider from '../provider/HeaderProvider';
+// import LoginProvider from '../providers/LoginProvider';
+// import ApiProvider from '../providers/ApiProvider';
 
 // import LoginComp from '../components/LoginComp';
 
@@ -18,13 +18,10 @@ describe('Testa o componente LoginComp.js.', () => {
   test('Testa se existe um input para digitar o email', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <App />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -35,13 +32,10 @@ describe('Testa o componente LoginComp.js.', () => {
   test('Testa se existe um input para digitar a senha', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <App />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -52,13 +46,10 @@ describe('Testa o componente LoginComp.js.', () => {
   test('Testa se o botão de entrar começa desabilitado', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <App />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -69,13 +60,10 @@ describe('Testa o componente LoginComp.js.', () => {
   test('Testa se o botão só é habilitado apos inserir um email e senha validos', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <App />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -91,13 +79,10 @@ describe('Testa o componente LoginComp.js.', () => {
   test('Testa se ao clicar no botão de Login, o usuario é redirecionado para a rota /meals.', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <App />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+
+      <HeaderProvider>
+        <App />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act

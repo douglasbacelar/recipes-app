@@ -1,22 +1,17 @@
 import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Routes from './Routes';
-import LoginProvider from './providers/LoginProvider';
-import HeaderProvider from './providers/HeaderProvider';
-import ApiProvider from './providers/ApiProvider';
-import RecipeProvider from './providers/RecipeProvider';
+import HeaderProvider from './provider/HeaderProvider';
+import ApiProvider from './provider/ApiProvider';
 
 function App() {
   return (
-    <RecipeProvider>
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Routes />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>
-    </RecipeProvider>
+    <ApiProvider>
+      <HeaderProvider>
+        <Routes />
+      </HeaderProvider>
+    </ApiProvider>
   );
 }
 

@@ -4,9 +4,9 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import HeaderProvider from '../providers/HeaderProvider';
-import LoginProvider from '../providers/LoginProvider';
-import ApiProvider from '../providers/ApiProvider';
+import HeaderProvider from '../provider/HeaderProvider';
+// import LoginProvider from '../providers/LoginProvider';
+// import ApiProvider from '../providers/ApiProvider';
 import Meals from '../pages/Meals';
 import Drinks from '../pages/Drinks';
 import HeaderContext from '../context/HeaderContext';
@@ -39,13 +39,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Meals com apenas uma letra pela opção first letter, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -68,13 +64,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Meals por um nome, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -97,13 +89,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Meals por um ingrediente, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -126,13 +114,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Drinks por um nome, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Drinks />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -155,13 +139,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Drinks por uma letra, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Drinks />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -184,13 +164,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Drinks por um nome, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Drinks />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -213,13 +189,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar pelo componente Drinks por um ingrediente, o retorno da API é o correto!', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Drinks />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -242,13 +214,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar por duas letras exibe um alert', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -268,13 +236,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar sem inserir nada no input search exibe um alert', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -290,13 +254,9 @@ describe('Testa o componente SearchBar.js', () => {
   test('testa se ao pesquisar por algum termo que não existe receitas é exibido um alert', async () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act

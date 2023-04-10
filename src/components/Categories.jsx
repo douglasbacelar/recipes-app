@@ -1,25 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import ApiContext from '../context/ApiContext';
 
-function Categories() {
-  const history = useHistory();
-  const { setPathname, categories, setCategory, category } = useContext(ApiContext);
-  const { pathname } = history.location;
-  const sliceCategories = 5;
-
-  useEffect(() => {
-    setPathname(pathname);
-  }, [setPathname, pathname]);
+function Categories({ categories, path }) {
+  const { setCategory, fetchCategoty, category } = useContext(ApiContext);
 
   const handleClickCategory = (choice) => {
     if (category === choice) {
       setCategory('all');
     } else {
       setCategory(choice);
+      fetchCategoty(path, choice);
     }
   };
 
+  const sliceCategories = 5;
   return (
     <div>
       {
@@ -30,7 +25,6 @@ function Categories() {
             onClick={ () => handleClickCategory(choice.strCategory) }
           >
             {choice.strCategory}
-
           </button>
         ))
       }
@@ -43,5 +37,14 @@ function Categories() {
     </div>
   );
 }
+
+Categories.propTypes = {
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      strCategory: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  path: PropTypes.string.isRequired,
+};
 
 export default Categories;

@@ -3,9 +3,8 @@ import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { BrowserRouter, Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import HeaderProvider from '../providers/HeaderProvider';
-import LoginProvider from '../providers/LoginProvider';
-import ApiProvider from '../providers/ApiProvider';
+import HeaderProvider from '../provider/HeaderProvider';
+import ApiProvider from '../provider/ApiProvider';
 import Routes from '../Routes';
 import Profile from '../pages/Profile';
 
@@ -19,9 +18,9 @@ describe('Testa a page Profile.js', () => {
     render(
       <ApiProvider>
         <HeaderProvider>
-          <LoginProvider>
-            <Routes />
-          </LoginProvider>
+
+          <Routes />
+
         </HeaderProvider>
       </ApiProvider>,
       { wrapper: BrowserRouter },
@@ -46,9 +45,9 @@ describe('Testa a page Profile.js', () => {
     render(
       <ApiProvider>
         <HeaderProvider>
-          <LoginProvider>
-            <Routes />
-          </LoginProvider>
+
+          <Routes />
+
         </HeaderProvider>
       </ApiProvider>,
       { wrapper: BrowserRouter },
@@ -67,9 +66,9 @@ describe('Testa a page Profile.js', () => {
     render(
       <ApiProvider>
         <HeaderProvider>
-          <LoginProvider>
-            <Routes />
-          </LoginProvider>
+
+          <Routes />
+
         </HeaderProvider>
       </ApiProvider>,
       { wrapper: BrowserRouter },

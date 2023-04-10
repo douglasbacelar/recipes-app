@@ -6,11 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import Meals from '../pages/Meals';
 import Drinks from '../pages/Drinks';
-import FavRecipes from '../pages/FavRecipes';
-import DoneRecipes from '../pages/DoneRecipes';
-import HeaderProvider from '../providers/HeaderProvider';
-import LoginProvider from '../providers/LoginProvider';
-import ApiProvider from '../providers/ApiProvider';
+import FavoriteRecipe from '../pages/FavoriteRecipe';
+import DoneRecipe from '../pages/DoneRecipe';
+import HeaderProvider from '../provider/HeaderProvider';
+// import LoginProvider from '../providers/LoginProvider';
+// import ApiProvider from '../providers/ApiProvider';
 
 describe('Testa o componentes do Header.js.', () => {
   const page = 'page-title';
@@ -18,13 +18,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Testa se ao clicar no icone de Pesquisar, é redirecionado para a pagina Profile', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -37,13 +33,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se ao clicar no botão de Search é mostrado o input para pesquisar e ao clicar mais uma vez o input desaparece', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -61,13 +53,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se a pagina Drinks contem os elementos corretos', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Drinks />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Drinks />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -78,13 +66,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se a pagina Done Recipes contem os elementos corretos', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <DoneRecipes />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <DoneRecipe />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -95,13 +79,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Teste se a pagina Favorite Recipes contem os elementos corretos', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <FavRecipes />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <FavoriteRecipe />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -112,13 +92,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Testa se ao clicar no icone de Search aparece a SearchBar para fazer pesquisa', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
@@ -139,13 +115,9 @@ describe('Testa o componentes do Header.js.', () => {
   test('Testa se ao clicar no icone do Profile, é redirecionado para a rota /profile', () => {
     // Arrange
     render(
-      <ApiProvider>
-        <HeaderProvider>
-          <LoginProvider>
-            <Meals />
-          </LoginProvider>
-        </HeaderProvider>
-      </ApiProvider>,
+      <HeaderProvider>
+        <Meals />
+      </HeaderProvider>,
       { wrapper: BrowserRouter },
     );
     // Act

@@ -4,7 +4,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import RecipeCard from '../components/RecipeCard';
+import Recipes from '../components/Recipes';
 
 describe('RecipeCard component', () => {
   const recipeMock = {
@@ -19,7 +19,7 @@ describe('RecipeCard component', () => {
   test('Testa se renderiza o nome e a imagem correta na rota /meals.', async () => {
     render(
       <BrowserRouter>
-        <RecipeCard index={ 1 } recipe={ recipeMock } pathname="/meals" />
+        <Recipes index={ 1 } recipe={ recipeMock } pathname="/meals" />
       </BrowserRouter>,
     );
     await waitFor(() => {
@@ -34,7 +34,7 @@ describe('RecipeCard component', () => {
   test('Testa se renderiza o nome e a imagem correta na rota /drinks.', async () => {
     render(
       <BrowserRouter>
-        <RecipeCard index={ 1 } recipe={ recipeMock } pathname="/drinks" />
+        <Recipes index={ 1 } recipe={ recipeMock } pathname="/drinks" />
       </BrowserRouter>,
     );
     await waitFor(() => {
@@ -50,12 +50,12 @@ describe('RecipeCard component', () => {
     const historyMock = { push: jest.fn() };
     render(
       <BrowserRouter>
-        <RecipeCard index={ 1 } recipe={ recipeMock } pathname="/meals" history={ historyMock } />
+        <Recipes index={ 1 } recipe={ recipeMock } pathname="/meals" history={ historyMock } />
       </BrowserRouter>,
     );
     waitFor(() => {
-      const recipeCard = screen.getByTestId('1-recipe-card');
-      userEvent.click(recipeCard);
+      const Recipe = screen.getByTestId('1-recipe-card');
+      userEvent.click(Recipe);
       expect(historyMock.push).toHaveBeenCalledTimes(1);
       expect(historyMock.push).toHaveBeenCalledWith('/meals/52771');
     });
@@ -64,12 +64,12 @@ describe('RecipeCard component', () => {
     const historyMock = { push: jest.fn() };
     render(
       <BrowserRouter>
-        <RecipeCard index={ 1 } recipe={ recipeMock } pathname="/drinks" history={ historyMock } />
+        <Recipes index={ 1 } recipe={ recipeMock } pathname="/drinks" history={ historyMock } />
       </BrowserRouter>,
     );
     waitFor(() => {
-      const recipeCard = screen.getByTestId('1-recipe-card');
-      userEvent.click(recipeCard);
+      const Recipe = screen.getByTestId('1-recipe-card');
+      userEvent.click(Recipe);
       expect(historyMock.push).toHaveBeenCalledTimes(1);
       expect(historyMock.push).toHaveBeenCalledWith('/drinks/11007');
     });
