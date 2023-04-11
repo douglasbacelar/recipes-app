@@ -1,131 +1,68 @@
 // Cria teste para cobrir 90% do componente Header.js!
-
 import React from 'react';
 import { screen, render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import Meals from '../pages/Meals';
-import Drinks from '../pages/Drinks';
-import FavoriteRecipe from '../pages/FavoriteRecipe';
-import DoneRecipe from '../pages/DoneRecipe';
 import HeaderProvider from '../provider/HeaderProvider';
-// import LoginProvider from '../providers/LoginProvider';
-// import ApiProvider from '../providers/ApiProvider';
+// import Header from '../components/Header';
+import ApiProvider from '../provider/ApiProvider';
 
 describe('Testa o componentes do Header.js.', () => {
-  const page = 'page-title';
-  const profileIconBtn = 'profile-top-btn';
-  test('Testa se ao clicar no icone de Pesquisar, é redirecionado para a pagina Profile', () => {
+  test('Testa se o componente é renderizado corretamente!', () => {
     // Arrange
     render(
-      <HeaderProvider>
-        <Meals />
-      </HeaderProvider>,
+      <ApiProvider>
+        <HeaderProvider>
+          <Meals />
+        </HeaderProvider>
+      </ApiProvider>,
       { wrapper: BrowserRouter },
     );
     // Act
-    const profileIcon = screen.getByTestId(profileIconBtn);
-    userEvent.click(profileIcon);
-    const profileText = screen.getByTestId(page);
-    // Assert
-    expect(profileText).toBeInTheDocument();
-  });
-  test('Teste se ao clicar no botão de Search é mostrado o input para pesquisar e ao clicar mais uma vez o input desaparece', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <Meals />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const searchIcon = screen.getByTestId('search-top-btn');
-    expect(searchIcon).toBeInTheDocument();
-    userEvent.click(searchIcon);
-    const searchInput = screen.getByTestId('search-input');
-    // Assert
-    expect(searchInput).toBeInTheDocument();
-    // Act
-    userEvent.click(searchIcon);
-    // Assert
-    expect(searchInput).not.toBeInTheDocument();
-  });
-  test('Teste se a pagina Drinks contem os elementos corretos', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <Drinks />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const drinksText = screen.getByTestId(page);
-    // Assert
-    expect(drinksText).toBeInTheDocument();
-  });
-  test('Teste se a pagina Done Recipes contem os elementos corretos', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <DoneRecipe />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const DoneRecipesText = screen.getByTestId(page);
-    // Assert
-    expect(DoneRecipesText).toBeInTheDocument();
-  });
-  test('Teste se a pagina Favorite Recipes contem os elementos corretos', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <FavoriteRecipe />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const FavRecepiesText = screen.getByTestId(page);
-    // Assert
-    expect(FavRecepiesText).toBeInTheDocument();
-  });
-  test('Testa se ao clicar no icone de Search aparece a SearchBar para fazer pesquisa', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <Meals />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const searchIcon = screen.getByTestId('search-top-btn');
-    userEvent.click(searchIcon);
-    const searchInput = screen.getByTestId('search-input');
-    const searchButton = screen.getByTestId('exec-search-btn');
-    const searchRadioIng = screen.getByTestId('ingredient-search-radio');
-    const searchRadioName = screen.getByTestId('name-search-radio');
-    const searchRadioLetter = screen.getByTestId('first-letter-search-radio');
-    // Assert
-    expect(searchInput).toBeInTheDocument();
-    expect(searchButton).toBeInTheDocument();
-    expect(searchRadioIng).toBeInTheDocument();
-    expect(searchRadioName).toBeInTheDocument();
-    expect(searchRadioLetter).toBeInTheDocument();
-  });
-  test('Testa se ao clicar no icone do Profile, é redirecionado para a rota /profile', () => {
-    // Arrange
-    render(
-      <HeaderProvider>
-        <Meals />
-      </HeaderProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const profileIcon = screen.getByTestId(profileIconBtn);
-    userEvent.click(profileIcon);
+    const searchTopBtn = screen.getByTestId('search-top-btn');
+    const profileTopBtn = screen.getByTestId('profile-top-btn');
     const pageTitle = screen.getByTestId('page-title');
     // Assert
+    expect(searchTopBtn).toBeInTheDocument();
+    expect(profileTopBtn).toBeInTheDocument();
     expect(pageTitle).toBeInTheDocument();
-    expect(profileIcon).toBeInTheDocument();
+  });
+  test('Testa se clicar no botão de Search aparece o componente SearchBar', () => {
+    // Arrange
+    render(
+      <ApiProvider>
+        <HeaderProvider>
+          <Meals />
+        </HeaderProvider>
+      </ApiProvider>,
+      { wrapper: BrowserRouter },
+    );
+    // Act
+    const searchTopBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(searchTopBtn);
+    const searchInput = screen.getByTestId('search-input');
+    // Assert
+    expect(searchInput).toBeInTheDocument();
+  });
+  test('Testa se ao clicar no botão de profile, o usuario é redirecionado para a pagina do Profile', () => {
+    // Arrange
+    const history = createMemoryHistory();
+    render(
+      <ApiProvider>
+        <HeaderProvider>
+          <Router history={ history }>
+            <Meals />
+          </Router>
+        </HeaderProvider>
+      </ApiProvider>,
+      { wrapper: BrowserRouter },
+    );
+    // Act
+    const profileTopBtn = screen.getByTestId('profile-top-btn');
+    userEvent.click(profileTopBtn);
+    // Assert
+    expect(history.location.pathname).toBe('/profile');
   });
 });

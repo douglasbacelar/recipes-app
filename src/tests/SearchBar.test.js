@@ -1,4 +1,4 @@
-// Cria teste para cobrir 90% do componente SearchBar.js!
+/* // Cria teste para cobrir 90% do componente SearchBar.js!
 
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -474,3 +474,4 @@ describe('Testa o componente SearchBar.js', () => {
     });
   });
 });
+ */

@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import { useHistory } from 'react-router-dom';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
@@ -31,3 +31,4 @@ function Footer() {
 }
 
 export default Footer;
+ */
