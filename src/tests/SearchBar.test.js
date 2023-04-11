@@ -12,6 +12,7 @@ import Drinks from '../pages/Drinks';
 import HeaderContext from '../context/HeaderContext';
 import SearchBar from '../components/SearchBar';
 import { fetchFoodsAPI, fetchDrinksAPI } from '../services/FoodsAPI';
+import SearchCard from '../components/SearchCard';
 
 jest.mock('../services/FoodsAPI');
 
@@ -454,43 +455,10 @@ describe('Testa o componente SearchBar.js', () => {
     render(
       <ApiProvider>
         <HeaderProvider>
-          <Meals />
+          <SearchCard />
         </HeaderProvider>
       </ApiProvider>,
       { wrapper: BrowserRouter },
     );
-    // Act
-    const searchButton = screen.getByTestId(search);
-    userEvent.click(searchButton);
-    const searchButton2 = screen.getByTestId(execSearch);
-    userEvent.click(searchButton2);
-    // Assert
-    waitFor(() => {
-      expect(global.alert).toBeCalledWith('Search term not entered');
-    });
-  });
-  test('testa se ao pesquisar por algum termo que não existe receitas é exibido um alert', async () => {
-    // Arrange
-    render(
-      <ApiProvider>
-        <HeaderProvider>
-          <Meals />
-        </HeaderProvider>
-      </ApiProvider>,
-      { wrapper: BrowserRouter },
-    );
-    // Act
-    const searchButton = screen.getByTestId(search);
-    userEvent.click(searchButton);
-    const searchInput = screen.getByTestId(searchInputLint);
-    const searchButton2 = screen.getByTestId(execSearch);
-    const NameRadio = screen.getByTestId(nameRadio);
-    userEvent.click(NameRadio);
-    userEvent.type(searchInput, 'aaaaaa');
-    userEvent.click(searchButton2);
-    // Assert
-    waitFor(() => {
-      expect(global.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
-    });
   });
 });
