@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import RecipeDetailsCard from '../components/RecipeDetailsCard';
+import RecipeDetails from '../components/RecipeDetails';
 import ApiContext from '../context/ApiContext';
 import Recommend from '../components/Recommend';
 import BtnStartRecipe from '../components/BtnStartRecipe';
@@ -52,7 +52,7 @@ function RecipePage({ path, type, typeKeysObj, carouselKey, carouselObjKeys }) {
       { isCopy && <h1 style={ pStyle }>Link copied!</h1> }
       {
         recipeDetails !== undefined && (
-          <RecipeDetailsCard
+          <RecipeDetails
             name={ recipeDetails[name] }
             img={ recipeDetails[img] }
             ingredients={ ingredientsAndMeasures }

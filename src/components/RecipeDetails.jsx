@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function RecipeDetailsCard({ name, img, ingredients, category, video, instructions }) {
+function RecipeDetails({ name, img, ingredients, category, video, instructions }) {
   return (
     <div>
       <img
@@ -44,7 +44,7 @@ function RecipeDetailsCard({ name, img, ingredients, category, video, instructio
   );
 }
 
-RecipeDetailsCard.propTypes = {
+RecipeDetails.propTypes = {
   name: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -53,4 +53,4 @@ RecipeDetailsCard.propTypes = {
   instructions: PropTypes.string.isRequired,
 };
 
-export default RecipeDetailsCard;
+export default RecipeDetails;

@@ -6,10 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import HeaderProvider from '../provider/HeaderProvider';
-// import LoginProvider from '../providers/LoginProvider';
-// import ApiProvider from '../providers/ApiProvider';
-
-// import LoginComp from '../components/LoginComp';
 
 describe('Testa o componente LoginComp.js.', () => {
   const email = 'email-input';
