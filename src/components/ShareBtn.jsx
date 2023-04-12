@@ -8,12 +8,13 @@ const copy = require('clipboard-copy');
 function ShareBtn() {
   const { setIsCopy } = useContext(ApiContext);
   const { pathname } = useLocation();
+  const newPathname = pathname.replace('/in-progress', '');
   return (
     <button
       style={ { position: 'fixed', bottom: '0px', left: '270px' } }
       data-testid="share-btn"
       onClick={ () => {
-        copy(`http://localhost:3000${pathname}`);
+        copy(`http://localhost:3000${newPathname}`);
         setIsCopy(true);
       } }
     >
