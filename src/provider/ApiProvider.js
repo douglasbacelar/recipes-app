@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiContext from '../context/ApiContext';
+import { getDoneRecipes } from '../services/localStorageFunctions';
 
 export default function ApiProvider({ children }) {
   const [initialRecipes, setInitialRecipes] = useState([]);
@@ -10,6 +11,7 @@ export default function ApiProvider({ children }) {
   const [recipeDetails, setRecipeDetails] = useState();
   const [recipeProgress, setRecipeProgress] = useState();
   const [isCopy, setIsCopy] = useState(false);
+  const [filterDone, setFilterDone] = useState(getDoneRecipes());
 
   const fetchInitialCards = async (url) => {
     const response = await fetch(url);
@@ -60,8 +62,10 @@ export default function ApiProvider({ children }) {
     setIsCopy,
     recipeProgress,
     fetchRecipeProgress,
+    filterDone,
+    setFilterDone,
   }), [initialRecipes, categories, category, recipesFromCategoty,
-    recipeDetails, isCopy, recipeProgress]);
+    recipeDetails, isCopy, recipeProgress, filterDone]);
 
   return (
     <ApiContext.Provider value={ values }>
