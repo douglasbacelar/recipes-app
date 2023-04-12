@@ -3,12 +3,13 @@ import { useLocation, useParams } from 'react-router-dom';
 import RecipeInProgressCard from '../components/RecipeInProgressCard';
 import ApiContext from '../context/ApiContext';
 
-function RecipeProgress() {
-  const { fetchRecipeDetails,
-    recipeInprogress } = useContext(ApiContext);
+function RecipeInProgress() {
+  const {
+    recipeProgress,
+    fetchRecipeProgress,
+  } = useContext(ApiContext);
   const { id } = useParams();
   const { pathname } = useLocation();
-  const localStorageRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   let path = 'thecocktaildb';
   let type = 'drinks';
@@ -17,55 +18,63 @@ function RecipeProgress() {
     type = 'meals';
   }
 
-  const ingredients = localStorageRecipes[type][id];
-
   useEffect(() => {
-    fetchRecipeDetails(path, id, type);
+    fetchRecipeProgress(path, id, type);
   }, []);
 
-  const recipeValid = recipeInprogress !== undefined;
+  const getIngredients = (food) => {
+    const ingredients = [];
+    const max = 20;
+    for (let i = 1; i <= max; i += 1) {
+      if (food[`strIngredient${i}`]) {
+        ingredients.push(`${food[`strMeasure${i}`]} - ${food[`strIngredient${i}`]}`);
+      }
+    }
+    return ingredients;
+  };
 
-  const renderRecipes = () => {
-    if (recipeValid && type === 'meals') {
+  const renderRecipe = () => {
+    if (type === 'meals') {
       const { strCategory, strInstructions, strAlcoholic, strArea, strTags,
-        strMealThumb, strMeal, idMeal } = recipeInprogress;
+        strMealThumb, strMeal, idMeal } = recipeProgress;
       return (<RecipeInProgressCard
+        image={ strMealThumb }
         name={ strMeal }
         id={ idMeal }
-        alcoholic={ strAlcoholic }
-        ingredients={ ingredients }
+        type={ type }
+        tags={ strTags }
+        alcoholicOrNot={ strAlcoholic }
+        nationality={ strArea }
         category={ strCategory }
         instructions={ strInstructions }
-        nationality={ strArea }
-        tags={ strTags }
-        image={ strMealThumb }
-        type={ type }
+        ingredients={ getIngredients(recipeProgress) }
       />);
-    } if (recipeValid && type === 'drinks') {
+    } if (type === 'drinks') {
       const { strCategory, strInstructions, strAlcoholic, strArea, strTags,
-        strDrinkThumb, strDrink, idDrink } = recipeInprogress;
+        strDrinkThumb, strDrink, idDrink } = recipeProgress;
       return (<RecipeInProgressCard
+        image={ strDrinkThumb }
         name={ strDrink }
         id={ idDrink }
-        alcoholic={ strAlcoholic }
-        ingredients={ ingredients }
+        type={ type }
+        tags={ strTags }
+        alcoholicOrNot={ strAlcoholic }
+        nationality={ strArea }
         category={ strCategory }
         instructions={ strInstructions }
-        nationality={ strArea }
-        tags={ strTags }
-        image={ strDrinkThumb }
-        type={ type }
+        ingredients={ getIngredients(recipeProgress) }
       />);
     }
   };
 
   return (
     <div>
+      <button onClick={ () => console.log(recipeProgress) }>TESTE</button>
       {
-        recipeValid && renderRecipes()
+        recipeProgress && renderRecipe()
       }
     </div>
   );
 }
 
-export default RecipeProgress;
+export default RecipeInProgress;

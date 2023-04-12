@@ -8,8 +8,8 @@ export default function ApiProvider({ children }) {
   const [category, setCategory] = useState('all');
   const [recipesFromCategoty, setRecipesFromCategory] = useState();
   const [recipeDetails, setRecipeDetails] = useState();
+  const [recipeProgress, setRecipeProgress] = useState();
   const [isCopy, setIsCopy] = useState(false);
-  const [recipeInprogress, setRecipeInprogress] = useState();
 
   const fetchInitialCards = async (url) => {
     const response = await fetch(url);
@@ -36,7 +36,13 @@ export default function ApiProvider({ children }) {
     const response = await fetch(url);
     const data = await response.json();
     setRecipeDetails(data[type][0]);
-    setRecipeInprogress(data[type][0]);
+  };
+
+  const fetchRecipeProgress = async (path, id, type) => {
+    const url = (`https://www.${path}.com/api/json/v1/1/lookup.php?i=${id}`);
+    const response = await fetch(url);
+    const data = await response.json();
+    setRecipeProgress(data[type][0]);
   };
 
   const values = useMemo(() => ({
@@ -52,9 +58,10 @@ export default function ApiProvider({ children }) {
     fetchRecipeDetails,
     isCopy,
     setIsCopy,
-    recipeInprogress,
-  }), [initialRecipes,
-    recipeInprogress, categories, category, recipesFromCategoty, recipeDetails, isCopy]);
+    recipeProgress,
+    fetchRecipeProgress,
+  }), [initialRecipes, categories, category, recipesFromCategoty,
+    recipeDetails, isCopy, recipeProgress]);
 
   return (
     <ApiContext.Provider value={ values }>
