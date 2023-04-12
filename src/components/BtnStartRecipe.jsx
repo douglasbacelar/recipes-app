@@ -22,13 +22,6 @@ function BtnStartRecipe({ type, ingredients, id }) {
 
   return (
     <div>
-      {/* <button
-        type="button"
-        className="btn btn-dark"
-        onClick={ () => console.log(type, ingredients, id) }
-      >
-        Dark
-      </button> */}
       <button
         style={ { position: 'fixed', bottom: '0px' } }
         onClick={ () => handleClickStartRecipe() }
