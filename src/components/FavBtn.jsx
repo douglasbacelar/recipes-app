@@ -77,7 +77,7 @@ function FavBtn({ id,
 }
 
 FavBtn.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   nationality: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
