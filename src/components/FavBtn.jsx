@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
+import ApiContext from '../context/ApiContext';
 
 function FavBtn({ id,
   type, nationality, category,
   alcoholicOrNot, name, image }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { isFavorite, setIsFavorite } = useContext(ApiContext);
   const currentFavorites = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   const natGeo = nationality === undefined ? '' : nationality;
   const alcoholic = alcoholicOrNot === undefined ? '' : alcoholicOrNot;

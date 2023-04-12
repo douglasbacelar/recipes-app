@@ -12,6 +12,7 @@ export default function ApiProvider({ children }) {
   const [recipeProgress, setRecipeProgress] = useState();
   const [isCopy, setIsCopy] = useState(false);
   const [filterDone, setFilterDone] = useState(getDoneRecipes());
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const fetchInitialCards = async (url) => {
     const response = await fetch(url);
@@ -64,7 +65,9 @@ export default function ApiProvider({ children }) {
     fetchRecipeProgress,
     filterDone,
     setFilterDone,
-  }), [initialRecipes, categories, category, recipesFromCategoty,
+    isFavorite,
+    setIsFavorite,
+  }), [initialRecipes, categories, category, recipesFromCategoty, isFavorite,
     recipeDetails, isCopy, recipeProgress, filterDone]);
 
   return (
