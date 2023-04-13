@@ -13,6 +13,7 @@ export default function ApiProvider({ children }) {
   const [isCopy, setIsCopy] = useState(false);
   const [filterDone, setFilterDone] = useState(getDoneRecipes());
   const [isFavorite, setIsFavorite] = useState(false);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const fetchInitialCards = async (url) => {
     const response = await fetch(url);
@@ -61,14 +62,16 @@ export default function ApiProvider({ children }) {
     fetchRecipeDetails,
     isCopy,
     setIsCopy,
-    recipeProgress,
-    fetchRecipeProgress,
     filterDone,
     setFilterDone,
     isFavorite,
     setIsFavorite,
+    recipeProgress,
+    fetchRecipeProgress,
+    selectedIngredients,
+    setSelectedIngredients,
   }), [initialRecipes, categories, category, recipesFromCategoty, isFavorite,
-    recipeDetails, isCopy, recipeProgress, filterDone]);
+    recipeDetails, isCopy, recipeProgress, filterDone, selectedIngredients]);
 
   return (
     <ApiContext.Provider value={ values }>

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 function BtnDoneRecipe({ id,
   type, nationality, category,
-  name, image, alcoholic, tags }) {
+  name, image, alcoholic, tags, isDisable }) {
   const history = useHistory();
 
   const getData = () => {
@@ -25,12 +25,16 @@ function BtnDoneRecipe({ id,
       tags: tags ? tags.split(',') : [],
       type: type === 'meals' ? 'meal' : 'drink',
     };
+    const oneNegative = -1;
+
     const doneRecipesStorage = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    if (doneRecipesStorage) {
+
+    const existingRecipeIndex = doneRecipesStorage
+      .findIndex((recipe) => recipe.id === doneRecipe.id);
+
+    if (existingRecipeIndex === oneNegative) {
       const allDoneRecipes = [...doneRecipesStorage, doneRecipe];
       localStorage.setItem('doneRecipes', JSON.stringify(allDoneRecipes));
-    } else {
-      localStorage.setItem('doneRecipes', JSON.stringify([doneRecipe]));
     }
 
     history.push('/done-recipes');
@@ -44,6 +48,7 @@ function BtnDoneRecipe({ id,
         className="btn btn-warning btn-sm"
         style={ { position: 'fixed', bottom: '0px' } }
         onClick={ () => handleClick() }
+        disabled={ isDisable }
       >
         Finish Recipe
       </button>
@@ -54,6 +59,7 @@ function BtnDoneRecipe({ id,
 BtnDoneRecipe.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  isDisable: PropTypes.bool.isRequired,
   nationality: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import RecipeInProgressCard from '../components/RecipeInProgressCard';
+import RecipeInProgressCard from '../components/RecipeInProgress';
 import ApiContext from '../context/ApiContext';
 
 function RecipeInProgress() {
@@ -69,7 +69,6 @@ function RecipeInProgress() {
 
   return (
     <div>
-      <button onClick={ () => console.log(recipeProgress) }>TESTE</button>
       {
         recipeProgress && renderRecipe()
       }
