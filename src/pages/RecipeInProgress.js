@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import RecipeInProgressCard from '../components/RecipeInProgress';
+import RecipeInProgressCard from '../components/RecipeInProgressCard';
 import ApiContext from '../context/ApiContext';
 
 function RecipeInProgress() {
