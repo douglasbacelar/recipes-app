@@ -42,16 +42,25 @@ function CheckboxIngredients({ ingredients, id }) {
 
   return (
     <div>
-
+      {
+        ingredients?.length === selectedIngredients?.length && (
+          <span
+            className="flex justify-center"
+          >
+            Enjoy!
+          </span>)
+      }
       {ingredients?.map((ingredient, index) => (
         <label
           key={ index }
           htmlFor={ index }
           data-testid={ `${index}-ingredient-step` }
+          className="flex h-4 space-x-2"
           style={ { textDecoration: selectedIngredients.includes(ingredient) ? (
             'line-through solid rgb(0, 0, 0)') : 'none' } }
         >
           <input
+            className="h-6 accent-orange-600 "
             type="checkbox"
             id={ index }
             value={ ingredient }
@@ -61,9 +70,7 @@ function CheckboxIngredients({ ingredients, id }) {
           {ingredient}
         </label>
       ))}
-      {
-        ingredients?.length === selectedIngredients?.length && <h1>MADRIIII MADRIIII</h1>
-      }
+
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { getDoneRecipes } from '../services/localStorageFunctions';
 export default function ApiProvider({ children }) {
   const [initialRecipes, setInitialRecipes] = useState([]);
   const [categories, getCategories] = useState([]);
-  const [category, setCategory] = useState('all');
+  const [category, setCategory] = useState('All');
   const [recipesFromCategoty, setRecipesFromCategory] = useState();
   const [recipeDetails, setRecipeDetails] = useState();
   const [recipeProgress, setRecipeProgress] = useState();
@@ -14,6 +14,7 @@ export default function ApiProvider({ children }) {
   const [filterDone, setFilterDone] = useState(getDoneRecipes());
   const [isFavorite, setIsFavorite] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [nameButton, setNameButton] = useState('All');
 
   const fetchInitialCards = async (url) => {
     const response = await fetch(url);
@@ -70,8 +71,11 @@ export default function ApiProvider({ children }) {
     fetchRecipeProgress,
     selectedIngredients,
     setSelectedIngredients,
+    nameButton,
+    setNameButton,
   }), [initialRecipes, categories, category, recipesFromCategoty, isFavorite,
-    recipeDetails, isCopy, recipeProgress, filterDone, selectedIngredients]);
+    recipeDetails, isCopy, recipeProgress,
+    filterDone, selectedIngredients, nameButton]);
 
   return (
     <ApiContext.Provider value={ values }>

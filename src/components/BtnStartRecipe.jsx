@@ -21,13 +21,14 @@ function BtnStartRecipe({ type, ingredients, id }) {
   }, []);
 
   return (
-    <div>
+    <div className="flex justify-center">
       <button
-        style={ { position: 'fixed', bottom: '0px' } }
+        className="bg-orange-500 text-white text-sm mb-24 px-24 py-2
+         rounded-md hover:bg-orange-600 active:bg-orange-600 font-semibold"
         onClick={ () => handleClickStartRecipe() }
         data-testid="start-recipe-btn"
         type="button"
-        className="btn btn-warning"
+        // className="btn btn-warning"
       >
         {
           isInProgress ? 'Continue Recipe' : 'Start Recipe'

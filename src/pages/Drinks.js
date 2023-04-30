@@ -28,7 +28,7 @@ function Drinks() {
     fetchCategories(path);
   }, []);
 
-  const ternary = category === 'all' ? (
+  const ternary = category === 'All' ? (
     <Recipes food={ initialRecipes?.drinks } type={ drinksKeys } />
   ) : (
     <Recipes food={ recipesFromCategoty?.drinks } type={ drinksKeys } />
@@ -42,6 +42,7 @@ function Drinks() {
         testAPI?.length > 0 ? (
           testAPI.slice(0, sliceList).map((recipe, index) => (
             <div
+              className="relative z-0"
               key={ index }
               data-testid={ `${index}-recipe-card` }
               id="teste-teste"
@@ -50,6 +51,7 @@ function Drinks() {
                 name={ recipe.strDrink }
                 image={ recipe.strDrinkThumb }
                 index={ index }
+                id={ recipe.idDrink }
               />
             </div>
           ))

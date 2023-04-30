@@ -28,7 +28,7 @@ function Meals() {
     fetchCategories(path);
   }, []);
 
-  const ternary = category === 'all' ? (
+  const ternary = category === 'All' ? (
     <Recipes food={ initialRecipes.meals } type={ mealsKeys } />
   ) : (
     <Recipes food={ recipesFromCategoty?.meals } type={ mealsKeys } />
@@ -38,25 +38,30 @@ function Meals() {
     <div>
       <Header title="Meals" />
       <Categories categories={ categories.meals } path={ path } />
-      {
-        testAPI?.length > 0 ? (
-          testAPI.slice(0, sliceList).map((recipe, index) => (
-            <div
-              key={ index }
-              data-testid={ `${index}-recipe-card` }
-              id="teste-teste"
-            >
-              <SearchCard
-                name={ recipe.strMeal }
-                image={ recipe.strMealThumb }
-                index={ index }
-              />
-            </div>
-          ))
-        ) : (
-          ternary
-        )
-      }
+      <section className="mt-8 flex flex-wrap justify-evenly mb-20">
+
+        {
+          testAPI?.length > 0 ? (
+            testAPI.slice(0, sliceList).map((recipe, index) => (
+              <div
+                className="relative z-0"
+                key={ index }
+                data-testid={ `${index}-recipe-card` }
+                id="teste-teste"
+              >
+                <SearchCard
+                  name={ recipe.strMeal }
+                  image={ recipe.strMealThumb }
+                  id={ recipe.idMeal }
+                  index={ index }
+                />
+              </div>
+            ))
+          ) : (
+            ternary
+          )
+        }
+      </section>
       <Footer />
     </div>
   );

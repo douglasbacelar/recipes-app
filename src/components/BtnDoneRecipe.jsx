@@ -41,11 +41,12 @@ function BtnDoneRecipe({ id,
   };
 
   return (
-    <div>
+    <div className="flex justify-center">
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        className="btn btn-warning btn-sm"
+        className="bg-orange-500 text-white text-sm px-24 py-2 mt-4
+        rounded-md hover:bg-orange-600 active:bg-orange-600 font-semibold"
         style={ { position: 'fixed', bottom: '0px' } }
         onClick={ () => handleClick() }
         disabled={ isDisable }

@@ -53,7 +53,7 @@ function FavBtn({ id,
   return (
 
     <button
-      style={ { position: 'fixed', bottom: '0px', left: '200px' } }
+      className="w-8"
       onClick={ () => handleClickFavorite() }
     >
       {

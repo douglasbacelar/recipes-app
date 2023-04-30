@@ -5,21 +5,14 @@ import RecipeDetails from '../components/RecipeDetails';
 import ApiContext from '../context/ApiContext';
 import Recommend from '../components/Recommend';
 import BtnStartRecipe from '../components/BtnStartRecipe';
-import ShareBtn from '../components/ShareBtn';
-import FavBtn from '../components/FavBtn';
 
 function RecipePage({ path, type, typeKeysObj, carouselKey, carouselObjKeys }) {
   const { recipeDetails,
-    fetchRecipeDetails, isCopy } = useContext(ApiContext);
+    fetchRecipeDetails } = useContext(ApiContext);
   const { name, img } = typeKeysObj;
   const { id } = useParams();
   const [ingredientsAndMeasures, setingredientsAndMeasures] = useState([]);
   const [categoy, setCategory] = useState();
-
-  const pStyle = {
-    margin: '0px',
-    paddingBottom: '25px',
-  };
 
   useEffect(() => {
     fetchRecipeDetails(path, id, type);
@@ -49,10 +42,11 @@ function RecipePage({ path, type, typeKeysObj, carouselKey, carouselObjKeys }) {
 
   return (
     <div>
-      { isCopy && <h1 style={ pStyle }>Link copied!</h1> }
+
       {
         recipeDetails !== undefined && (
           <RecipeDetails
+            type={ type }
             name={ recipeDetails[name] }
             img={ recipeDetails[img] }
             ingredients={ ingredientsAndMeasures }
@@ -63,6 +57,12 @@ function RecipePage({ path, type, typeKeysObj, carouselKey, carouselObjKeys }) {
         )
       }
       <div>
+        <p
+          className="text-lg flex font-semibold m-0 pt-3 text-start
+         text-orange-500 pl-14"
+        >
+          Recommended:
+        </p>
         <Recommend
           carouselKey={ carouselKey }
           carouselObjKeys={ carouselObjKeys }
@@ -74,21 +74,7 @@ function RecipePage({ path, type, typeKeysObj, carouselKey, carouselObjKeys }) {
           ingredients={ ingredientsAndMeasures }
           id={ id }
         />
-        <ShareBtn />
-        {
-          recipeDetails !== undefined && (
-            <FavBtn
-              id={ id }
-              type={ type }
-              nationality={ recipeDetails.strArea }
-              category={ recipeDetails.strCategory }
-              alcoholicOrNot={ recipeDetails.strAlcoholic }
-              name={ recipeDetails[name] }
-              image={ recipeDetails[img] }
-              ingredients={ ingredientsAndMeasures }
-            />
-          )
-        }
+
       </div>
     </div>
   );

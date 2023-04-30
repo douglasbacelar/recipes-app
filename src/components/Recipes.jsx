@@ -7,26 +7,46 @@ function Recipes({ food, type }) {
   const sliceCards = 12;
   const history = useHistory();
   return (
-    <div>
+    <div className="mt-8 flex flex-wrap justify-evenly mb-20">
       {
         food?.slice(0, sliceCards).map((recipe, index) => (
-          <button
-            style={ { width: '200px', height: '200px' } }
-            data-testid={ `${index}-recipe-card` }
+          <div
+            className="relative z-0"
             key={ index }
-            onClick={ () => history.push(`/${path}/${recipe[id]}`) }
           >
-            <h1 data-testid={ `${index}-card-name` }>
-              {recipe[str]}
-            </h1>
-            <img
-              width={ 75 }
-              height={ 75 }
-              data-testid={ `${index}-card-img` }
-              src={ recipe[thumb] }
-              alt={ recipe[str] }
-            />
-          </button>
+            <div className="my-6 z-0">
+              <button
+                className="my-6 z-0"
+                data-testid={ `${index}-recipe-card` }
+                onClick={ () => history.push(`/${path}/${recipe[id]}`) }
+              >
+                <img
+                  className="rounded-md  w-36"
+                  data-testid={ `${index}-card-img` }
+                  src={ recipe[thumb] }
+                  alt={ recipe[str] }
+                />
+                <div
+                  className="absolute bottom-2 bg-white/75 w-36 pb-4
+                  flex flex-column"
+                >
+                  <span
+                    data-testid={ `${index}-card-name` }
+                    className="font-bold text-stone-800 pl-2"
+                  >
+                    {recipe[str]}
+                  </span>
+
+                  <span
+                    data-testid={ `${index}-card-name` }
+                    className="font-bold text-stone-800 pl-2"
+                  >
+                    {recipe.strArea}
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
         ))
       }
     </div>

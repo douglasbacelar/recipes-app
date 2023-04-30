@@ -22,17 +22,24 @@ function Recommend({ carouselKey, carouselObjKeys }) {
               key={ index }
               data-testid={ `${index}-recommendation-card` }
             >
-              <p data-testid={ `${index}-recommendation-title` }>{elem[name]}</p>
               <img
                 style={ { width: '180px',
                   height: '150px',
-                  marginBottom: '50px',
+                  marginBottom: '10px',
                   marginLeft: '1px',
                 } }
                 src={ elem[img] }
                 alt={ elem[name] }
               />
+              <p
+                className="flex justify-center"
+                data-testid={ `${index}-recommendation-title` }
+              >
+                {elem[name]}
+
+              </p>
             </div>
+
           )))
       }
     </div>
